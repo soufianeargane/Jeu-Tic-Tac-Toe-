@@ -1,0 +1,40 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #fff;
+}
+
+h1 {
+    color: #333;
+}
+
+#gameBoard {
+    /*border-collapse: collapse;*/
+    margin: 20px auto;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(20, 0fr);
+}
+.square {
+    width: 27px;
+    height: 27px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+square .X {
+    color: #ff5722;
+}
+
+square .O {
+    color: #2196f3;
+}
