@@ -31,10 +31,10 @@ h1 {
     cursor: pointer;
     background-color: #f0f0f0;
 }
-square .X {
+.square.X {
     color: #ff5722;
 }
 
-square .O {
+.square.O {
     color: #2196f3;
 }
