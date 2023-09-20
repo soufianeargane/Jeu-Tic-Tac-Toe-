@@ -25,17 +25,16 @@ function handleClick(event) {
     tracking_game[row][col] = currentPlayer;
     event.target.textContent = currentPlayer;
     event.target.classList.add(currentPlayer);
-    if( checkWin()){
+    if( checkWin(row, col)){
         console.warn("it is over. " + currentPlayer + "  Wins")
     }else{
         //i need a condition hna
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
         event.target.removeEventListener('click', handleClick);
-        console.log(tracking_game);
     }
 }
 
-function checkWin() {
+function checkWin(row, col) {
     console.log("messi");
     // Check for horizontal wins
     for (let i = 0; i < 20; i++) {
@@ -45,6 +44,18 @@ function checkWin() {
                 tracking_game [i][j + 2] === currentPlayer &&
                 tracking_game [i][j + 3] === currentPlayer &&
                 tracking_game [i][j + 4] === currentPlayer
+            ){
+                return true;
+            }
+        }
+    }
+    for (let j = 0; j < 16; j++) {
+        for (let i = 0; i < 20; i++) {
+            if(tracking_game[j][i]=== currentPlayer &&
+                tracking_game [j+1][i] === currentPlayer &&
+                tracking_game [j+2][i] === currentPlayer &&
+                tracking_game [j+3][i] === currentPlayer &&
+                tracking_game [j+4][i] === currentPlayer
             ){
                 return true;
             }
