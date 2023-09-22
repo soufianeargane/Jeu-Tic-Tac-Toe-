@@ -2,21 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css"  rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
     <title>Jeu Tic Tac Toe 20x20 </title>
 </head>
 <body>
-    <h1>Tic Tac Toe 20x20 By SOUFIANE</h1>
-    <div class="score">
-        <p>Player X Score: <span id="playerXScore">0</span></p>
-        <p>Player O Score: <span id="playerOScore">0</span></p>
+<div class="bg-img">
+    <div class="container mx-auto flex gap-4 justify-between px-60 pt-20" id="form">
         <div>
-            <button id="reset">New Game</button>
+            <label for="first-player" class="block mb-2 text-lg font-medium text-white dark:text-white">
+                First Player ( X )
+            </label>
+            <input type="text" id="first-player" class=" w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-900 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required>
+        </div>
+        <div>
+            <label for="second-player" class="block mb-2 text-lg font-medium text-white dark:text-white">
+                Second Player ( O )
+            </label>
+            <input type="text" id="second-player" class="w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required>
+        </div>
+    </div>
+    <div>
+        <button id="submit" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-20 py-2.5 text-center mr-2 mb-2 mt-8 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    </div>
+    <div id="info" class=" hidden score mt-8 text-lg">
+        <div class="flex text-2xl text-white justify-center gap-20">
+            <p id="playerXScore"></p>
+            <p id="playerOScore"></p>
+        </div>
+        <div>
+            <button id="reset"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-20 py-2.5 text-center mr-2 mt-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >New Game</button>
         </div>
     </div>
     <div id="gameBoard">
         <!-- Create a 20x20 grid using HTML table -->
     </div>
+</div>
 
     <script src="script.js"></script>
 </body>

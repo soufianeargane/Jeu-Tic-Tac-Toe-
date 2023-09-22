@@ -4,17 +4,29 @@ const playerXScore = document.getElementById('playerXScore');
 const playerOScore = document.getElementById('playerOScore');
 let xWins = 0;
 let oWins = 0;
+let playerone = '';
+let playertwo = '';
 
 // set initial variables
 let tracking_game = Array(20).fill().map(() => Array(20).fill(''));
-//console.log(tracking_game);
-
-
 let currentPlayer = 'X';
 
 
 
-init();
+document.getElementById('submit').addEventListener('click', function () {
+    playerone = document.getElementById('first-player').value;
+    playertwo = document.getElementById('second-player').value;
+    if(playerone === '' || playertwo === ''){
+        alert("Please Enter Players Names");
+        return;
+    }
+    document.getElementById('form').style.display = 'none';
+    this.style.display = 'none';
+    document.getElementById('info').style.display = 'block';
+    playerXScore.textContent = playerone + ' (X) : ' + xWins;
+    playerOScore.textContent = playertwo + ' (O) : ' + oWins;
+    init();
+});
 
 function handleClick(event) {
     const row = event.target.dataset.row;
@@ -23,11 +35,12 @@ function handleClick(event) {
     event.target.textContent = currentPlayer;
     event.target.classList.add(currentPlayer);
     if( checkWin(row, col)){
-        //console.warn("it is over. " + currentPlayer + "  Wins")
-        //announceWinner();
+        console.log('winner' + currentPlayer);
+        announceWinner();
         // stop the game
-        //stopGame();
-        // announce the winner
+        stopGame();
+        // save in local storage
+        saveData(currentPlayer);
     }else{
         //i need a condition hna
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
@@ -36,19 +49,17 @@ function handleClick(event) {
 }
 
 function checkWin(row, col) {
-
-        if (
-            (checkRight(row, col) + checkLeft(row, col) + 1)       === 5 ||
-            (checkUp(row, col) + checkDown(row, col) + 1)          === 5 ||
-            (checkRightDown(row, col) + checkLeftUp(row, col) + 1) === 5 ||
-            (checkLeftDown(row, col) + checkRightUp(row, col) + 1) === 5
-        ) {
-            console.warn("Player " + currentPlayer + " wins!");
-        }else{
-            return console.log("no win");
-        }
-        return ;
+    if (
+        (checkRight(row, col) + checkLeft(row, col) + 1)       === 5 ||
+        (checkUp(row, col) + checkDown(row, col) + 1)          === 5 ||
+        (checkRightDown(row, col) + checkLeftUp(row, col) + 1) === 5 ||
+        (checkLeftDown(row, col) + checkRightUp(row, col) + 1) === 5
+    ) {
+        return  true;
+    }else{
+        return false;
     }
+}
 
 
 
@@ -81,14 +92,11 @@ function init() {
 function announceWinner() {
     if (currentPlayer === 'X') {
         xWins++;
-        playerXScore.textContent = xWins;
-        console.warn('Player X wins!');
+        playerXScore.textContent = playerone + ' (X) : ' + xWins;
     } else {
         oWins++;
-        playerOScore.textContent = oWins;
-        console.warn('Player O wins!');
+        playerOScore.textContent = playertwo + ' (O) : ' + oWins;
     }
-    init();
 }
 
 // reset the game
@@ -202,4 +210,44 @@ function checkRightUp(row, col){
         }
     }
     return count;
+}
+
+function saveData(currentPlayer) {
+
+    let gameData = JSON.parse(localStorage.getItem("gameData")) || [];
+
+    // Check if there's an existing entry for the current players
+    let playerData = gameData.find(
+                                    entry =>
+                                        (entry.firstPlayer === playerone && entry.secondPlayer === playertwo)
+                                        || (entry.firstPlayer === playertwo && entry.secondPlayer === playerone) );
+
+    if (playerData) {
+        // Update scores for the same players
+        if (currentPlayer === 'X') {
+            if(playerData.firstPlayer === playerone) {
+                playerData.firstPlayerScore++;
+            }else{
+                playerData.secondPlayerScore++;
+            }
+        }else{
+            if(playerData.firstPlayer === playerone) {
+                playerData.secondPlayerScore++;
+            }else{
+                playerData.firstPlayerScore++;
+            }
+        }
+    } else {
+        // Add a new entry for different players
+        gameData.push({
+            'firstPlayer': playerone,
+            'firstPlayerScore': currentPlayer === 'X' ? 1 : 0,
+            'secondPlayer': playertwo,
+            'secondPlayerScore': currentPlayer === 'O' ? 1 : 0
+        });
+    }
+
+    console.log(gameData);
+    // Save the updated game data back to local storage
+    localStorage.setItem("gameData", JSON.stringify(gameData));
 }
