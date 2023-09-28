@@ -250,4 +250,24 @@ function saveData(currentPlayer) {
     console.log(gameData);
     // Save the updated game data back to local storage
     localStorage.setItem("gameData", JSON.stringify(gameData));
+    showDataFromLocalStorage();
 }
+
+// Get the game data from local storage
+function showDataFromLocalStorage(){
+    document.getElementById('data-storage').innerHTML = ``;
+    let gameData = JSON.parse(localStorage.getItem("gameData")) || [];
+    gameData.forEach(game => {
+        let tr = `
+                    <tr>
+                        <td id="">${game.firstPlayer}</td>
+                        <td id="">${game.firstPlayerScore} </td>                       
+                        <td> : </td>
+                        <td id="">${game.secondPlayerScore}</td>
+                        <td id="">${game.secondPlayer}</td>
+                    </tr>`
+        document.getElementById('data-storage').innerHTML += tr;
+    });
+
+}
+showDataFromLocalStorage();
